@@ -34,6 +34,10 @@ public class BaseResponse<T> {
         return new BaseResponse<>(status, message, data);
     }
 
+    public static <T> BaseResponse<T> success(HttpStatus status, String message) {
+        return new BaseResponse<>(status, message, null);
+    }
+
     // Factory method for error responses
     public static <T> BaseResponse<T> error(HttpStatus status, String message) {
         return new BaseResponse<>(status, message, null);

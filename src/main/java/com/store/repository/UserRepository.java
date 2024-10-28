@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByIdAndRole(UUID studentId, String role);
+public interface UserRepository<T extends User> extends JpaRepository<T, UUID> {
+    Optional<T> findByEmail(String email);
 }

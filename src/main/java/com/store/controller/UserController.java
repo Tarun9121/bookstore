@@ -17,30 +17,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
-@RestController
-@RequestMapping("/users")
-public class UserController {
-    @Autowired
-    private UserService userService;
+public abstract class UserController<T extends User> {
 
-    @PostMapping
-    public ResponseEntity<BaseResponse<UserDto>> createUser(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.createUser(userDto));
+    private final UserService<T> userService;
+
+    public UserController(UserService<T> userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/student/{userId}")
-    public BaseResponse<UserDto> getStudentById(@PathVariable("userId") UUID userId) {
-        return BaseResponse.success(HttpStatus.OK, "successfully fetched the user data", userService.getStudentById(userId));
+    @PostMapping("/create")
+    public T createUser(@RequestBody T user) {
+        return userService.createUser(user);
     }
 
-    @GetMapping("/teacher/{userId}")
-    public BaseResponse<UserDto> getTeacherById(@PathVariable("userId") UUID userId) {
-        return BaseResponse.success(HttpStatus.OK, "successfully fetched the user data", userService.getTeacherById(userId));
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
     }
 
-    @DeleteMapping("/{userId}")
-    public BaseResponse<String> deleteUser(@PathVariable UUID userId) {
-        return userService.deleteUser(userId);
+    @GetMapping("/email/{email}")
+    public T getUserByEmail(@PathVariable String email) {
+        return userService.findUserByEmail(email);
     }
 }
