@@ -10,11 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UserDto {
     private UUID id;
+    private String name;
     private String email;
     private String password;
-    private UserRole role;
-
-    public enum UserRole {
-        STUDENT, TEACHER
-    }
+    private String role;
 }

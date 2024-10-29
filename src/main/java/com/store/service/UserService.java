@@ -3,6 +3,7 @@ package com.store.service;
 import com.store.dto.BaseResponse;
 import com.store.dto.UserDto;
 import com.store.entity.User;
+import com.store.enums.Role;
 import com.store.exceptions.ResourceNotFoundException;
 import com.store.repository.UserRepository;
 import com.store.transform.Convert;
@@ -36,13 +37,13 @@ public class UserService {
     }
 
     public UserDto getStudentById(UUID id) {
-        User student = userRepository.findByIdAndRole(id, User.Role.STUDENT.toString())
+        User student = userRepository.findByIdAndRole(id, Role.STUDENT.toString())
                 .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
         return transform.convert(student);
     }
 
     public UserDto getTeacherById(UUID id) {
-        User teacher = userRepository.findByIdAndRole(id, User.Role.TEACHER.toString())
+        User teacher = userRepository.findByIdAndRole(id, Role.TEACHER.toString())
                 .orElseThrow(() -> new RuntimeException("Teacher not found with ID: " + id));
         return transform.convert(teacher);
     }
