@@ -17,6 +17,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests(auth -> auth
                         .antMatchers("/users/public/**").permitAll()
+                        .antMatchers("./users/student/**").hasRole("STUDENT")
                         .anyRequest().authenticated()
                 )
                 .httpBasic();

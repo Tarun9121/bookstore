@@ -1,5 +1,6 @@
 package com.store.service;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.store.dto.BaseResponse;
 import com.store.dto.UserDto;
 import com.store.entity.User;
@@ -10,6 +11,7 @@ import com.store.transform.Convert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -36,10 +38,18 @@ public class UserService {
         }
     }
 
-    public UserDto getStudentById(UUID id) {
-        User student = userRepository.findByIdAndRole(id, Role.STUDENT.toString())
-                .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
-        return transform.convert(student);
+    public ResponseEntity<BaseResponse<UserDto>> getStudentById(UUID id) {
+        try {
+            User student = userRepository.findByIdAndRole(id, Role.STUDENT.toString())
+                    .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
+            BaseResponse<UserDto> response = BaseResponse.success(HttpStatus.OK, "Data fetched successfully", transform.convert(student));
+            return new ResponseEntity<>(response, response.getStatus());
+        }
+        catch(RuntimeException exc) {
+            log.error("Student not found with Id: " + id);
+            BaseResponse<UserDto> response = BaseResponse.error(HttpStatus.NOT_FOUND, "No user found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
     }
 
     public UserDto getTeacherById(UUID id) {

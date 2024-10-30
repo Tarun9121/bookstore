@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/student/{userId}")
-    public BaseResponse<UserDto> getStudentById(@PathVariable("userId") UUID userId) {
-        return BaseResponse.success(HttpStatus.OK, "successfully fetched the user data", userService.getStudentById(userId));
+    public ResponseEntity<BaseResponse<UserDto>> getStudentById(@PathVariable("userId") UUID userId) {
+        return userService.getStudentById(userId);
     }
 
     @GetMapping("/teacher/{userId}")

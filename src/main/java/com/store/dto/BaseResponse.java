@@ -29,12 +29,14 @@ public class BaseResponse<T> {
         this.timestamp = LocalDateTime.now();
     }
 
-    // Factory method for success responses
     public static <T> BaseResponse<T> success(HttpStatus status, String message, T data) {
         return new BaseResponse<>(status, message, data);
     }
 
-    // Factory method for error responses
+    public static <T> BaseResponse<T> success(HttpStatus status, String message) {
+        return new BaseResponse<>(status, message, null);
+    }
+
     public static <T> BaseResponse<T> error(HttpStatus status, String message) {
         return new BaseResponse<>(status, message, null);
     }

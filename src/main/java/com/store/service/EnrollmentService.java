@@ -7,6 +7,7 @@ import com.store.entity.Enrollment;
 import com.store.entity.User;
 import com.store.exceptions.ResourceNotFoundException;
 import com.store.repository.EnrollmentRepository;
+import com.store.repository.UserRepository;
 import com.store.transform.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class EnrollmentService {
     @Autowired
     private EnrollmentRepository enrollmentRepository;
     @Autowired
-    private UserService studentRepository;
+    private UserRepository studentRepository;
     @Autowired
     private CourseService courseService;
     @Autowired
@@ -36,9 +37,9 @@ public class EnrollmentService {
             }
 
             Enrollment enrollment = new Enrollment();
-            UserDto studentDto = studentRepository.getStudentById(studentId);
+            User student = studentRepository.findById(studentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Student not found with this id: " + studentId));
             Course course = courseService.getCourseById(courseId);
-            User student = transform.convert(studentDto);
             enrollment.setStudent(student);
             enrollment.setCourse(course);
             Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
