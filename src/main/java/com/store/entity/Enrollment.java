@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,6 +35,7 @@ public class Enrollment {
     private Course course;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(36)")
     private Status enrollmentStatus = Status.ENROLLED;
 
     private boolean isDeleted = false;
