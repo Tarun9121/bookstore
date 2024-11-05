@@ -1,35 +1,30 @@
 package com.store.configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class InMemoryUserConfig {
-
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
+    public InMemoryUserDetailsManager userDetailsManager() {
+        UserDetails john = User.builder()
+                .username("john")
+                .password("test123")
+                .authorities("EMPLOYEE")
                 .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
+        UserDetails mary = User.builder()
+                .username("mary")
+                .password("test123")
+                .authorities("EMPLOYEE", "MANAGER")
                 .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        UserDetails susan = User.builder()
+                .username("susan")
+                .password("test123")
+                .authorities("EMPLOYEE", "MANAGER", "ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(john, mary, susan);
     }
 }

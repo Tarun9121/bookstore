@@ -39,6 +39,21 @@ public class UserController {
         return BaseResponse.success(HttpStatus.OK, "successfully fetched the user data", userService.getTeacherById(userId));
     }
 
+    @GetMapping("/student")
+    public String testStudent() {
+        return "student details";
+    }
+
+    @GetMapping("/test/authorites")
+    public String testAuthorites() {
+        return "working!!!!!";
+    }
+
+    @GetMapping("/teacher")
+    public String testTeacher() {
+        return "teacher details";
+    }
+
     @DeleteMapping("/{userId}")
     public BaseResponse<String> deleteUser(@PathVariable UUID userId) {
         return userService.deleteUser(userId);

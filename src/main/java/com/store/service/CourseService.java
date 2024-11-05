@@ -4,21 +4,11 @@ import com.store.dto.BaseResponse;
 import com.store.dto.CourseDto;
 import com.store.dto.UserDto;
 import com.store.entity.Course;
-import com.store.entity.User;
 import com.store.exceptions.ResourceNotFoundException;
 import com.store.repository.CourseRepository;
 import com.store.transform.Convert;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
